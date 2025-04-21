@@ -23,9 +23,9 @@ public class Exp2_S6_Francisco_Parra {
     static String[][] reservas = new String[100][5];
 
     // Control por zonas
-    static boolean[] asientosA = new boolean[35];
-    static boolean[] asientosB = new boolean[35];
-    static boolean[] asientosC = new boolean[35];
+    static boolean[] asientosA = new boolean[30];
+    static boolean[] asientosB = new boolean[30];
+    static boolean[] asientosC = new boolean[30];
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -214,7 +214,7 @@ public class Exp2_S6_Francisco_Parra {
         double descuento = (edad >= 60) ? 0.15 : (estudiante.equals("s") ? 0.10 : 0);
         double finalPrecio = precio * (1 - descuento);
 
-        System.out.println("===== RESUMEN RESERVA PREVIA =====");
+        System.out.println("===== RESUMEN RESERVA =====");
         System.out.println("Zona: " + zona + " | Asiento: " + asiento + " | Base: $" + precio + " | Desc: " + (descuento * 100) + "% | Total: $" + finalPrecio);
         System.out.print("¿Confirmar reserva? (s/n): ");
         if (!scanner.nextLine().equalsIgnoreCase("s")) return indice;
@@ -232,38 +232,43 @@ public class Exp2_S6_Francisco_Parra {
     }
 
     
-   
-    public static int seleccionarAsiento(Scanner scanner, String zona) {
-        boolean[] asientos = switch (zona) {
-            case "A" -> asientosA;
-            case "B" -> asientosB;
-            case "C" -> asientosC;
-            default -> null;
-        };
+  public static int seleccionarAsiento(Scanner scanner, String zona) {
+    boolean[] asientos = switch (zona) {
+        case "A" -> asientosA;
+        case "B" -> asientosB;
+        case "C" -> asientosC;
+        default -> null;
+    };
 
-        if (asientos == null) return -1;
+    if (asientos == null) return -1;
 
-        System.out.print("Asientos disponibles en zona " + zona + ": ");
-        for (int i = 0; i < asientos.length; i++) {
-            if (!asientos[i]) System.out.print((i + 1) + " ");
+    System.out.println("Asientos en zona " + zona + ":");
+    for (int i = 0; i < asientos.length; i++) {
+        if (asientos[i]) {
+            System.out.print("[X] ");
+        } else {
+            System.out.printf("[%d] ", i + 1);
         }
-       
-       int intentos = 0;
-       while (intentos < 2) {
-            System.out.print("Seleccione número de asiento: ");
+        if ((i + 1) % 10 == 0) System.out.println(); // salto de línea cada 10 asientos
+    }
+    System.out.println(); // salto de línea final
+
+    int intentos = 0;
+    while (intentos < 2) {
+        System.out.print("Seleccione número de asiento: ");
         int num = scanner.nextInt();
         scanner.nextLine();
 
-            if (num >= 1 && num <= asientos.length && !asientos[num - 1]) {
-                return num;
-            } else {
-                System.out.println("Asiento inválido o ya ocupado.");
-                intentos++;
-            }
+        if (num >= 1 && num <= asientos.length && !asientos[num - 1]) {
+            return num;
+        } else {
+            System.out.println("Asiento inválido o ya ocupado.");
+            intentos++;
         }
-       System.out.println("Número máximo de intentos.Cancelando la selección de asiento");
-       return -1;
-        }
+    }
+    System.out.println("Número máximo de intentos. Cancelando la selección de asiento.");
+    return -1;
+}
 
 
     public static void marcarAsiento(String zona, int asiento) {
@@ -337,6 +342,10 @@ public static int confirmarReservaComoCompra(Scanner scanner, int indiceCarrito,
         return;
     }
 
+     System.out.println("===== Entradas en Carrito =====");
+        for (int i = 0; i < indiceCarrito; i++) {
+            System.out.println("Entrada " + (i + 1) + ": Zona: " + carrito[i][0] + " | Asiento: " + carrito[i][4] + " | Base: $" + carrito[i][1] + " | Desc: " + carrito[i][2] );
+        }
     System.out.print("Ingrese número de entrada a modificar (1 a " + indiceCarrito + "): ");
     int num = scanner.nextInt();
     scanner.nextLine();
