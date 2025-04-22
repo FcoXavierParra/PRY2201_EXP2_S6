@@ -50,10 +50,6 @@ asientosZona[A|B|C][][]: Matrices booleanas para gestión de disponibilidad
 Cada reserva tiene un tiempo límite de 2 minutos para ser confirmada, tras lo cual se libera el asiento automáticamente.
 
 🔧 Tecnologías Usadas
-Java (nivel básico-intermedio)
-
-Consola como interfaz principal
-
 java.util.Scanner, java.util.Timer, java.util.TimerTask
 
 📁 Estructura del Código
